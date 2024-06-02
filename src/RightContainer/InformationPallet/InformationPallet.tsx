@@ -1,13 +1,7 @@
-import React from 'react';
+import { IinformationPallet } from '../../Utils/types';
 import styles from './informationPallet.module.css';
 
-interface InformationPallet {
-  palletName: string;
-  palletDescription: string;
-  palletColor: string;
-}
-
-const InformationPallet = ({ palletName, palletDescription, palletColor }: InformationPallet) => {
+const InformationPallet = ({ palletName, palletDescription, palletColor }: IinformationPallet) => {
   return (
     <div className={styles.pallet}>
       <div className={styles.diagonalLine} style={{ backgroundColor: palletColor }}></div>

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
 import { rightContainerConst } from '../../Constants';
+import { IDice } from '../../Utils/types';
 import styles from './dice.module.css';
 
-const Dice = ({ diceNumber, setDiceNumber }: any) => {
+const Dice = ({ diceNumber, onRoll }: IDice) => {
   const generateDiceNumber = () => {
     const randomNumber = Math.floor(Math.random() * 6) + 1;
-    setDiceNumber(randomNumber);
+    onRoll(randomNumber);
   };
   return (
     <div className={styles.diceConatiner}>

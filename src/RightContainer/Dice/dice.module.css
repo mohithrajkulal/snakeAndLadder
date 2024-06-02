@@ -20,11 +20,14 @@
   height: 31.2px;
   border-radius: 0px 4px 4px 0px;
   outline: none;
+  font-weight: 700;
+  text-align: center;
 }
 
 .playButton {
   background-color: #6979f8;
   border: 1px solid #6979f8;
+  border-bottom: none;
   border-radius: 3px 0px 0px 3px;
   color: white;
   width: 87px;

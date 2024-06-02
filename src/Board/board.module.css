@@ -1,7 +1,7 @@
 .board {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  /* width: 78vw; */
+  width: 78vw;
   height: 100vh;
   position: relative;
 }
@@ -11,14 +11,12 @@
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  /* padding: 10px; */
 }
 
 .oddNumberCell {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  /* padding: 10px; */
 }
 
 .cellNumber {
@@ -46,12 +44,27 @@
   background-color: red;
 }
 
+.playersPosition {
+  display: flex;
+  flex-direction: column;
+  height: 60px;
+  align-self: flex-end;
+}
+
 .startPoint {
+  align-self: baseline;
   margin: 0;
   color: #464646;
+  font-weight: 500;
 }
 
 .finishPoint {
+  align-self: baseline;
   margin: 0;
   color: #464646;
+  font-weight: 500;
+}
+
+.emptySpace {
+  height: 33px;
 }

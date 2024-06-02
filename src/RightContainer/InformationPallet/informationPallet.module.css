@@ -27,8 +27,8 @@
 }
 
 .diagonalLine {
-  width: 80%;
+  width: 90%;
   height: 5px;
-  transform: rotate(142deg);
+  transform: rotate(145deg);
   border-radius: 5px;
 }

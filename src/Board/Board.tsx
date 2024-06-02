@@ -1,15 +1,11 @@
-import React from 'react';
-import styles from './board.module.css';
 import playerOneSvg from '../Images/P1.svg';
 import playerTwoSvg from '../Images/P2.svg';
+import start from '../Images/Down arrow.svg';
 import { snakePositions, ladderPositions } from '../Utils/Utility';
-import { Players } from '../Game/Game';
+import { IGameBoard } from '../Utils/types';
+import styles from './board.module.css';
 
-interface GameBoard {
-  playerPositions: Players;
-}
-
-const GameBoard = ({ playerPositions }: GameBoard) => {
+const GameBoard = ({ playerPositions }: IGameBoard) => {
   // const boardCells = Array.from({ length: 100 }, (_, i) => i + 1).reverse();
   const rows = 10;
   const columns = 10;
@@ -61,7 +57,6 @@ const GameBoard = ({ playerPositions }: GameBoard) => {
   };
 
   const boardCelll = baardCell?.flatMap(item => item).reverse();
-  console.log(playerPositions);
 
   return (
     <div className={styles.board}>
@@ -69,13 +64,47 @@ const GameBoard = ({ playerPositions }: GameBoard) => {
         const evenCell = singleCell % 2 === 0;
         const isPlayer1Here = singleCell === playerPositions.player1;
         const isPlayer2Here = singleCell === playerPositions.player2;
+        const snake = snakePositions.find(
+          snakePosition =>
+            snakePosition.currentPosition === singleCell ||
+            snakePosition.gotoPosition === singleCell
+        );
+        const ladder = ladderPositions.find(
+          ladderPosition =>
+            ladderPosition.currentPosition === singleCell ||
+            ladderPosition.gotoPosition === singleCell
+        );
+
         return (
           <div key={index} className={evenCell ? styles.evenNumberCell : styles.oddNumberCell}>
             <p className={styles.cellNumber}>{singleCell}</p>
-            {isPlayer1Here && <img src={playerOneSvg} alt='Player 1' width={25} />}
-            {isPlayer2Here && <img src={playerTwoSvg} alt='Player 2' width={25} />}
-            {singleCell === 1 && <p className={styles.startPoint}>START</p>}
-            {singleCell === 100 && <p className={styles.finishPoint}>FINISH</p>}
+            <div className={styles.playersPosition}>
+              <div>
+                {!(isPlayer2Here || isPlayer1Here) &&
+                  (ladder || snake || singleCell === 1 || singleCell === 100) && (
+                    <div className={styles.emptySpace}></div>
+                  )}
+                {isPlayer1Here && <img src={playerOneSvg} alt='Player 1' width={25} />}
+                {isPlayer2Here && <img src={playerTwoSvg} alt='Player 2' width={25} />}
+              </div>
+              {singleCell === 1 && (
+                <p className={styles.startPoint}>
+                  START
+                  <img src={start} alt='start' width={12} style={{ marginLeft: '13px' }} />
+                </p>
+              )}
+              {singleCell === 100 && <p className={styles.finishPoint}>FINISH</p>}
+              {snake && (
+                <p style={{ color: '#FFB900' }} className={styles.finishPoint}>
+                  {snake.name}
+                </p>
+              )}
+              {ladder && (
+                <p style={{ color: '#D14228' }} className={styles.finishPoint}>
+                  {ladder.name}
+                </p>
+              )}
+            </div>
             {/* {ladderPositions.map(({ currentPosition, gotoPosition }, index) => (
               <div
                 key={`ladder-${index}`}
@@ -83,7 +112,7 @@ const GameBoard = ({ playerPositions }: GameBoard) => {
                 style={getLineStyle(currentPosition, gotoPosition)}
               />
             ))} */}
-            {snakePositions.map(({ currentPosition, gotoPosition }, index) => {
+            {/*  {snakePositions.map(({ currentPosition, gotoPosition }, index) => {
               // console.log(
               //   currentPosition,
               //   gotoPosition,
@@ -99,7 +128,7 @@ const GameBoard = ({ playerPositions }: GameBoard) => {
                   />
                 )
               );
-            })}
+            })} */}
           </div>
         );
       })}
