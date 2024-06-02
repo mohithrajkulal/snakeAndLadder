@@ -1,4 +1,3 @@
-import React from 'react';
 import Dice from './Dice/Dice';
 import { rightContainerConst } from '../Constants';
 import playerOneSvg from '../Images/P1.svg';
@@ -27,12 +26,12 @@ const RightContainer = ({
         <div className={styles.palletConatiner}>
           <InformationPallet
             palletName={rightContainerConst.LADDERS}
-            palletDescription={'L1 - L5'}
+            palletDescription={rightContainerConst.LADDER_COUNT}
             palletColor={'#FFB900'}
           />
           <InformationPallet
             palletName={rightContainerConst.SNAKES}
-            palletDescription={'S1 - S5'}
+            palletDescription={rightContainerConst.SNAKE_COUNT}
             palletColor={'#D14228'}
           />
         </div>

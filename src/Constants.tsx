@@ -14,4 +14,10 @@ export const rightContainerConst = {
   PLAYER_TWO: 'Player 2',
   LADDERS: 'Ladders',
   SNAKES: 'Snakes',
+  LADDER_COUNT: 'L1 - L5',
+  SNAKE_COUNT: 'S1 - S5',
+};
+
+export const links = {
+  W3G_LINE_LINK: 'http://www.w3.org/2000/svg',
 };

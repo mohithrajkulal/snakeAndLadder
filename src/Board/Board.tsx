@@ -3,135 +3,110 @@ import playerTwoSvg from '../Images/P2.svg';
 import start from '../Images/Down arrow.svg';
 import { snakePositions, ladderPositions } from '../Utils/Utility';
 import { IGameBoard } from '../Utils/types';
+import { links } from '../Constants';
 import styles from './board.module.css';
+import { useEffect } from 'react';
 
 const GameBoard = ({ playerPositions }: IGameBoard) => {
-  // const boardCells = Array.from({ length: 100 }, (_, i) => i + 1).reverse();
   const rows = 10;
   const columns = 10;
 
-  const baardCell = Array.from({ length: rows }, (_, rowIndex) => {
+  const boardCell = Array.from({ length: rows }, (_, rowIndex) => {
     const base = rowIndex * columns + 1;
     const row = Array.from({ length: columns }, (_, colIndex) => base + colIndex);
     return rowIndex % 2 === 0 ? row.reverse() : row;
   });
 
-  const getLineStyle = (start: any, end: any) => {
-    const cellSize = 10;
-    const startRow = Math.floor((start - 1) / 10);
-    const startCol = (start - 1) % 10;
-    const endRow = Math.floor((end - 1) / 10);
-    const endCol = (end - 1) % 10;
-    console.log(
-      start,
-      'startcol',
-      startCol,
-      10 - ((start - 1) % 10),
-      'startRow',
-      startRow,
-      end,
-      'endRow',
-      endRow,
-      'endCol',
-      endCol,
-      10 - ((end - 1) % 10)
-    );
+  const boardCellReversed = boardCell?.flatMap(item => item).reverse();
 
-    const x1 = startCol * cellSize + cellSize / 2;
-    const y1 = (10 - startRow) * cellSize + cellSize / 2;
-    const x2 = endCol * cellSize + cellSize / 2;
-    const y2 = (10 - endRow) * cellSize + cellSize / 2;
+  useEffect(() => {
+    const drawLines = () => {
+      [...ladderPositions, ...snakePositions].forEach(position => {
+        const startElement = document.getElementById(`cell-${position.currentPosition}`);
+        const endElement = document.getElementById(`cell-${position.gotoPosition}`);
 
-    const deltaX = x2 - x1;
-    const deltaY = y2 - y1;
-    const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
-    const length = Math.sqrt(deltaX ** 2 + deltaY ** 2);
+        if (startElement && endElement) {
+          const startRect = startElement.getBoundingClientRect();
+          const endRect = endElement.getBoundingClientRect();
+          const startX = (startRect.left + startRect.width / 2).toString();
+          const startY = (startRect.top + startRect.height / 2).toString();
+          const endX = (endRect.left + endRect.width / 2).toString();
+          const endY = (endRect.top + endRect.height / 2).toString();
 
-    return {
-      width: `${length}vw`,
-      transform: `rotate(${angle}deg)`,
-      transformOrigin: '0 0',
-      // top: `calc(${y1}vw)`,
-      // left: `calc(${x1}vw)`,
+          const line = document.createElementNS(links.W3G_LINE_LINK, 'line');
+          line.setAttribute('x1', startX);
+          line.setAttribute('y1', startY);
+          line.setAttribute('x2', endX);
+          line.setAttribute('y2', endY);
+          line.setAttribute('stroke', snakePositions.includes(position) ? '#D14228' : '#FFB900');
+          line.setAttribute('stroke-width', '3');
+          line.setAttribute('stroke-linecap', 'round');
+
+          document.getElementById('svg-container')?.appendChild(line);
+        }
+      });
     };
-  };
 
-  const boardCelll = baardCell?.flatMap(item => item).reverse();
+    drawLines();
+  }, []);
 
   return (
-    <div className={styles.board}>
-      {boardCelll?.map((singleCell, index) => {
-        const evenCell = singleCell % 2 === 0;
-        const isPlayer1Here = singleCell === playerPositions.player1;
-        const isPlayer2Here = singleCell === playerPositions.player2;
-        const snake = snakePositions.find(
-          snakePosition =>
-            snakePosition.currentPosition === singleCell ||
-            snakePosition.gotoPosition === singleCell
-        );
-        const ladder = ladderPositions.find(
-          ladderPosition =>
-            ladderPosition.currentPosition === singleCell ||
-            ladderPosition.gotoPosition === singleCell
-        );
+    <div className={styles.boardConatiner}>
+      <svg id='svg-container' className={styles.svgBoard}></svg>
+      <div className={styles.board}>
+        {boardCellReversed?.map((singleCell, index) => {
+          const evenCell = singleCell % 2 === 0;
+          const isPlayer1Here = singleCell === playerPositions.player1;
+          const isPlayer2Here = singleCell === playerPositions.player2;
+          const snake = snakePositions.find(
+            snakePosition =>
+              snakePosition.currentPosition === singleCell ||
+              snakePosition.gotoPosition === singleCell
+          );
+          const ladder = ladderPositions.find(
+            ladderPosition =>
+              ladderPosition.currentPosition === singleCell ||
+              ladderPosition.gotoPosition === singleCell
+          );
 
-        return (
-          <div key={index} className={evenCell ? styles.evenNumberCell : styles.oddNumberCell}>
-            <p className={styles.cellNumber}>{singleCell}</p>
-            <div className={styles.playersPosition}>
-              <div>
-                {!(isPlayer2Here || isPlayer1Here) &&
-                  (ladder || snake || singleCell === 1 || singleCell === 100) && (
-                    <div className={styles.emptySpace}></div>
-                  )}
-                {isPlayer1Here && <img src={playerOneSvg} alt='Player 1' width={25} />}
-                {isPlayer2Here && <img src={playerTwoSvg} alt='Player 2' width={25} />}
+          return (
+            <div
+              key={index}
+              id={`cell-${singleCell}`}
+              className={evenCell ? styles.evenNumberCell : styles.oddNumberCell}
+            >
+              <p className={styles.cellNumber}>{singleCell}</p>
+              <div className={styles.playersPosition}>
+                <div>
+                  {!(isPlayer2Here || isPlayer1Here) &&
+                    (ladder || snake || singleCell === 1 || singleCell === 100) && (
+                      <div className={styles.emptySpace}></div>
+                    )}
+                  {isPlayer1Here && <img src={playerOneSvg} alt='Player 1' width={25} />}
+                  {isPlayer2Here && <img src={playerTwoSvg} alt='Player 2' width={25} />}
+                </div>
+                {singleCell === 1 && (
+                  <p className={styles.startPoint}>
+                    START
+                    <img src={start} alt='start' width={12} style={{ marginLeft: '13px' }} />
+                  </p>
+                )}
+                {singleCell === 100 && <p className={styles.finishPoint}>FINISH</p>}
+                {snake && (
+                  <p style={{ color: '#D14228' }} className={styles.finishPoint}>
+                    {snake.name}
+                  </p>
+                )}
+                {ladder && (
+                  <p style={{ color: '#FFB900' }} className={styles.finishPoint}>
+                    {ladder.name}
+                  </p>
+                )}
               </div>
-              {singleCell === 1 && (
-                <p className={styles.startPoint}>
-                  START
-                  <img src={start} alt='start' width={12} style={{ marginLeft: '13px' }} />
-                </p>
-              )}
-              {singleCell === 100 && <p className={styles.finishPoint}>FINISH</p>}
-              {snake && (
-                <p style={{ color: '#FFB900' }} className={styles.finishPoint}>
-                  {snake.name}
-                </p>
-              )}
-              {ladder && (
-                <p style={{ color: '#D14228' }} className={styles.finishPoint}>
-                  {ladder.name}
-                </p>
-              )}
             </div>
-            {/* {ladderPositions.map(({ currentPosition, gotoPosition }, index) => (
-              <div
-                key={`ladder-${index}`}
-                className={styles.ladder}
-                style={getLineStyle(currentPosition, gotoPosition)}
-              />
-            ))} */}
-            {/*  {snakePositions.map(({ currentPosition, gotoPosition }, index) => {
-              // console.log(
-              //   currentPosition,
-              //   gotoPosition,
-              //   singleCell,
-              //   [currentPosition, gotoPosition].includes(singleCell)
-              // );
-              return (
-                currentPosition === singleCell && (
-                  <div
-                    key={`snake-${index}`}
-                    className={styles.snake}
-                    style={getLineStyle(currentPosition, gotoPosition)}
-                  />
-                )
-              );
-            })} */}
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 };

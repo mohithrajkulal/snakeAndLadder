@@ -1,7 +1,8 @@
 import React from 'react';
+import { IWinnerModal } from '../../Utils/types';
 import styles from './winnerModal.module.css';
 
-const WinnerModal = ({ isVisible, onClose, title, children }: any) => {
+const WinnerModal = ({ isVisible, onClose, title, children }: IWinnerModal) => {
   if (!isVisible) return null;
 
   return (

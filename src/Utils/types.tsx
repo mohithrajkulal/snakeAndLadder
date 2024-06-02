@@ -32,3 +32,10 @@ export interface IDice {
 export interface IGameBoard {
   playerPositions: Players;
 }
+
+export interface IWinnerModal {
+  isVisible: boolean;
+  onClose: () => void;
+  title: string;
+  children: React.ReactNode;
+}

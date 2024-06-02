@@ -9,7 +9,7 @@ const PlayerInfo = ({
   currentPlayer,
 }: IPlayerInfo) => {
   return (
-    <div className={styles.conatiner}>
+    <div className={currentPlayer === player ? styles.conatiner : styles.opponentContainer}>
       <div>
         <img src={playerSvg} alt='player' width={45} />
         <h6 className={styles.playerTag} style={{ color: playerColor }}>
