@@ -1,0 +1,57 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  /* width: 78vw; */
+  height: 100vh;
+  position: relative;
+}
+
+.evenNumberCell {
+  background-color: #f8f8f8;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  /* padding: 10px; */
+}
+
+.oddNumberCell {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  /* padding: 10px; */
+}
+
+.cellNumber {
+  color: #707070;
+  padding: 0.5rem 0rem 0rem 0.5rem;
+  font-size: 12.5px;
+  opacity: 1;
+  top: 0;
+  left: 0;
+  margin: 0;
+}
+
+.ladder,
+.snake {
+  position: absolute;
+  height: 2px;
+  z-index: 1;
+}
+
+.ladder {
+  background-color: green;
+}
+
+.snake {
+  background-color: red;
+}
+
+.startPoint {
+  margin: 0;
+  color: #464646;
+}
+
+.finishPoint {
+  margin: 0;
+  color: #464646;
+}

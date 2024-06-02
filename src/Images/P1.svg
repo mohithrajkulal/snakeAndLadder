@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="62" height="71" viewBox="0 0 62 71">
+  <g id="P1" transform="translate(-1070 -981)">
+    <g id="Polygon_2" data-name="Polygon 2" transform="translate(1070 983)" fill="#d62d09">
+      <path d="M 61.22722244262695 68.5 L 0.7727805972099304 68.5 L 31.00000190734863 1.220055818557739 L 61.22722244262695 68.5 Z" stroke="none"/>
+      <path d="M 31.00000190734863 2.44012451171875 L 1.545566558837891 68 L 60.45443725585938 68 L 31.00000190734863 2.44012451171875 M 31.00000190734863 0 L 62 69 L 3.814697265625e-06 69 L 31.00000190734863 0 Z" stroke="none" fill="#f8f8f8"/>
+    </g>
+    <text id="P1-2" data-name="P1" transform="translate(1089 1039)" fill="#fff" font-size="20" font-family="Roboto-Medium, Roboto" font-weight="500"><tspan x="0" y="0">P1</tspan></text>
+    <circle id="Ellipse_2" data-name="Ellipse 2" cx="12" cy="12" r="12" transform="translate(1089 981)" fill="#d62d09"/>
+  </g>
+</svg>
